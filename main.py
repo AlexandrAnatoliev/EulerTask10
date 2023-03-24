@@ -8,18 +8,30 @@ import time
 
 
 def test_time(function):
+    """
+    Функция-декоратор, измеряет время выполнения функции function.
+    Ждя работы достаточно поставить декоратор "@test_time" перед исследуемой функцией
+    :param function: функция, время работы которой измеряется
+    :return: Время работы в секундах
+    """
+
     def wrapper(*args, **kwargs):
-        st = time.time()
+        start_time = time.time()
         res = function(*args, **kwargs)
-        et = time.time()
-        dt = et - st
-        print(f"Время работы функции: {dt} сек")
+        finish_time = time.time()
+        diff_time = finish_time - start_time
+        print(f"Время работы функции: {diff_time} сек")
         return res
 
     return wrapper
 
 
 def is_simple(n):
+    """
+    Функция определяет, является ли число простым
+    :param n: число
+    :return: True/False
+    """
     for i in range(2, int(n ** 0.5 + 1)):
         if n % i == 0:
             return False
@@ -28,11 +40,16 @@ def is_simple(n):
 
 @test_time
 def get_sum(numb):
-    s = 0
+    """
+    Функция определяет сумму простых чисел до числа numb
+    :param numb: максимальное простое число
+    :return: сумма простых чисел
+    """
+    sum_numbers = 0
     for i in range(2, numb):
         if is_simple(i):
-            s += i
-    return s
+            sum_numbers += i
+    return sum_numbers
 
 
 print(f"Сумма всех простых чисел меньше десяти: {get_sum(10)}")
